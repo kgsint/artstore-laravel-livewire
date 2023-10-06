@@ -2,7 +2,7 @@
     <div class="container mx-auto px-6 py-3">
         <div class="flex items-center justify-between">
             <div class="hidden w-full text-black md:flex md:items-center text-4xl font-bold" style="font-family: Caveat">
-                <a href="/" href="">
+                <a href="/" wire:navigate>
                     kgsint store
                 </a>
             </div>
@@ -10,7 +10,7 @@
                 Art Supplies
             </div>
             <div class="flex items-center justify-end space-x-3 w-full">
-                <a href="/cart" class="flex items-center text-gray-600 focus:outline-none mx-4 sm:mx-0 hover:text-black">
+                <a href="/cart" wire:navigate class="flex items-center text-gray-600 focus:outline-none mx-4 sm:mx-0 hover:text-black">
                     <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
@@ -18,8 +18,8 @@
                 </a>
 
                 @guest
-                    <a href="{{ route('login') }}">Login</a>
-                    <a href="{{ route('register') }}">Register</a>
+                    <a href="{{ route('login') }}" wire:navigate>Login</a>
+                    <a href="{{ route('register') }}" wire:navigate>Register</a>
                     @else
                     <button form="logoutForm">Logout</button>
 
@@ -39,14 +39,12 @@
         </div>
         <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center mt-4">
             <div class="flex flex-col sm:flex-row">
-                <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/">Home</a>
-                <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/products">Shop</a>
-                <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/categories">Categories</a>
+                <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/products" wire:navigate>Shop</a>
+                <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/categories" wire:navigate>Categories</a>
                 <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Contact</a>
                 @auth
-                    <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/orders">Orders</a>
+                    <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/orders" wire:navigate>Orders</a>
                 @endauth
-                <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">About</a>
             </div>
         </nav>
         <div class="relative mt-6 max-w-lg mx-auto">
@@ -56,6 +54,7 @@
                 </svg>
             </span>
 
+            {{-- search input --}}
                 <input
                     class=" pl-10 block w-full rounded-md border-gray-300 shadow-sm -z-10 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     wire:model.live.debounce.150ms="search"
@@ -63,10 +62,11 @@
                     placeholder="Search"
                 >
 
+                {{-- global search dropdown --}}
                 @if ($search && count($this->products))
                     <div class="absolute right-0  bg-gray-100 shadow rounded-md w-full space-y-3">
                             @foreach ($this->products as $product)
-                                <a href="/products/{{ $product->slug }}" class="flex gap-3 hover:bg-gray-200  p-3">
+                                <a href="/products/{{ $product->slug }}" wire:navigate class="flex gap-3 hover:bg-gray-200  p-3">
                                     <img src="{{ $product->getFirstMediaUrl() }}" alt="{{ $product->title }} image" class="w-8 h-8">
                                     <div>
                                         <h3>{{ $product->title }}</h3>

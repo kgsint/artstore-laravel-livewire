@@ -3,6 +3,7 @@
         {{ Str::title($variations->first()->type) }}
     </div>
 
+    {{-- select product variation --}}
     <x-select wire:model.live="selectedVariation">
         <option value="">Choose {{ $variations->first()->type }}</option>
         @foreach ($variations as $variation)

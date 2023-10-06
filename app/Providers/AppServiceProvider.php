@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(UrlGenerator $urlGenerator): void
     {
-        if($this->app->environment('production')) {
+        if($this->app->environment('APP_ENV') === 'production') {
             $urlGenerator->forceScheme('https');
         }
     }

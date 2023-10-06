@@ -13,10 +13,7 @@ use App\Http\Middleware\RedirectIfEmptyCart;
 use Illuminate\Support\Facades\Route;
 
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::redirect('/', '/products');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,10 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
 Route::get('/categories', CategoryIndexController::class);
-Route::get('/', CategoryShowController::class);
 Route::get('/products', ProductIndexController::class)->name('products.index');
 Route::get('/products/{product:slug}', ProductShowController::class)->name('products.show');
 
@@ -36,4 +30,8 @@ Route::get('checkout', CheckoutIndexController::class)->name('checkout.index')->
 Route::view('product', 'products.single-product');
 Route::get('/orders/{order:uuid}/confirmation', OrderConfirmController::class)->name('order.confirm');
 Route::get('/orders', OrderIndexController::class)->middleware('auth')->name('orders.index');
+
+require __DIR__.'/auth.php';
+
+
 
