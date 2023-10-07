@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderObserver
 {
+    // send user email when the order status is updated
     public function updated(Order $order)
     {
         $filledStatuses = collect($order->getDirty())
@@ -21,7 +22,7 @@ class OrderObserver
         );
 
         if($order->status() !== $originalOrder->status() && $filledStatuses->count()) {
-            Mail::to($order->user)->send(new OrderStatusUpdated($order));
+            // Mail::to($order->user)->send(new OrderStatusUpdated($order));
         }
     }
 }

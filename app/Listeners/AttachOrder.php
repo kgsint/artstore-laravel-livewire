@@ -17,11 +17,9 @@ class AttachOrder
         //
     }
 
-    /**
-     * Handle the event.
-     */
     public function handle(Registered $event): void
     {
+        // associate new registered user with their order(s).
         Order::where('email', $event->user->email)->get()->each(function($order) use($event) {
             $order->user()->associate($event->user);
             $order->save();

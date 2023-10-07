@@ -61,7 +61,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money('usd', 100)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('live_at')
                     ->dateTime()

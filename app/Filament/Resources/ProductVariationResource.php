@@ -52,7 +52,7 @@ class ProductVariationResource extends Resource
                                     ->label('Parent Product Variation (Optional)')
                                     ->relationship('parent', 'title')
                                     ->getOptionLabelFromRecordUsing(
-                                        fn(Model $record) =>"{$record->title} ({$record->product->title} {$record?->parent?->title})"
+                                        fn(Model $record) =>"{$record->title} ({$record->product?->title} {$record?->parent?->title})"
                                         ),
                                 Forms\Components\TextInput::make('order')
                                     ->numeric(),

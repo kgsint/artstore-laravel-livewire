@@ -17,4 +17,18 @@ class EditProductVariation extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['price'] /= 100;
+
+        return $data;
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['price'] *= 100;
+
+        return $data;
+    }
 }
