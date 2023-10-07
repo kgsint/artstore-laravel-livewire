@@ -149,7 +149,8 @@ class Checkout extends Component
         // destroy cart_session and cart instance in carts table
         $cart->destroy();
 
-        Mail::to($order?->user ?? $order->email)->send(new OrderCreated);
+        // mail to user when create order
+        // Mail::to($order?->user ?? $order->email)->send(new OrderCreated);
 
         $cart->destroy();
 

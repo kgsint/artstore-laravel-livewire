@@ -41,7 +41,7 @@
             <div class="flex flex-col sm:flex-row">
                 <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/products" wire:navigate>Shop</a>
                 <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/categories" wire:navigate>Categories</a>
-                <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Contact</a>
+                {{-- <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Contact</a> --}}
                 @auth
                     <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="/orders" wire:navigate>Orders</a>
                 @endauth

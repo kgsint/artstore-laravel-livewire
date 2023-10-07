@@ -17,7 +17,7 @@ class StockResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-line';
 
-    protected static ?string $navigationGroup = 'Manage Products';
+    protected static ?string $navigationGroup = 'Manage Stocks';
 
 
 
