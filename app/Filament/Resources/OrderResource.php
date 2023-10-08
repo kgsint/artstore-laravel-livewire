@@ -71,8 +71,8 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('current_status')
                                                     ->badge()
                                                     ->color(fn(string $state) => match($state) {
-                                                        'Order Placed' => 'warning',
-                                                        'Order Packaged' => 'info',
+                                                        'Order Placed' => 'gray',
+                                                        'Order Packaged' => 'warning',
                                                         'Order Shipped' => 'success',
                                                     }),
                 Tables\Columns\TextColumn::make('created_at')
