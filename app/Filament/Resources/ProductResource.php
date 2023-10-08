@@ -73,9 +73,9 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money('usd', 100)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('live_at')
-                    ->dateTime()
-                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_live')
+                ->label('Active')
+                ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

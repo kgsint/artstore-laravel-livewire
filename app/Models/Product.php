@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\ProductLiveScope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,12 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Category::class, 'category_product');
     }
 
+    public function isLive(): Attribute
+    {
+        return Attribute::make(get: fn() => !is_null($this->live_at));
+    }
+
+    // spatie media
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumbnail')->fit(Manipulations::FIT_CROP, 200, 200);
@@ -49,17 +56,6 @@ class Product extends Model implements HasMedia
     {
         $this->addMediaCollection('default')
                                             ->useFallbackUrl("/storage/default-product-image.png");
-    }
-
-    // laravel scout
-    public function toSearchableArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'categories' => $this->categories->pluck('id'),
-        ];
     }
 
 }

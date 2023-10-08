@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\Widgets\OrderOverview;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -44,9 +45,10 @@ class OrderResource extends Resource
                     ->email(),
                 Forms\Components\TextInput::make('subtotal')
                     ->hiddenOn('edit'),
-                Forms\Components\DateTimePicker::make('placed_at'),
+                Forms\Components\DateTimePicker::make('placed_at')->hidden(),
                 Forms\Components\DateTimePicker::make('packaged_at'),
                 Forms\Components\DateTimePicker::make('shipped_at'),
+                // Forms\Components\Select::
             ]);
     }
 
@@ -59,7 +61,7 @@ class OrderResource extends Resource
                     ->placeholder('guest')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('shippingType.title')
-                    ->label('Delivery Service')
+                    ->label('Delivery')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('uuid')
                     ->label('UUID')
@@ -109,7 +111,7 @@ class OrderResource extends Resource
         return [
             'index' => Pages\ListOrders::route('/'),
             // 'create' => Pages\CreateOrder::route('/create'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
+            // 'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
 

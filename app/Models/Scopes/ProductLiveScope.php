@@ -10,6 +10,8 @@ class ProductLiveScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereNotNull('live_at');
+        if(url()->current() !== route('filament.admin.resources.products.index')) {
+            $builder->whereNotNull('live_at');
+        }
     }
 }
