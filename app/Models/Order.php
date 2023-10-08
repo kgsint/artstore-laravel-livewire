@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Presenters\OrderPresenter;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -67,6 +68,14 @@ class Order extends Model
     public function status()
     {
         return collect($this->statuses)->last(fn($status) => $this->{$status});
+    }
+
+    // to display in filament admin panel
+    public function currentStatus(): Attribute
+    {
+        return Attribute::make(get: function() {
+            return $this->presenter()->present();
+        });
     }
 
     public function presenter(): OrderPresenter

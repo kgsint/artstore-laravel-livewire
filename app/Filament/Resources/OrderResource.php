@@ -29,31 +29,22 @@ class OrderResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->disabledOn('edit'),
+                    ->hiddenOn('edit'),
                 Forms\Components\Select::make('shipping_address_id')
                     ->relationship('shippingAddress', 'id')
-                    ->disabledOn('edit')
-                    ->required(),
+                    ->hiddenOn('edit'),
                 Forms\Components\Select::make('shipping_type_id')
                     ->relationship('shippingType', 'title')
-                    ->disabledOn('edit')
-                    ->required(),
+                    ->hiddenOn('edit'),
                 Forms\Components\TextInput::make('uuid')
                     ->label('UUID')
-                    ->disabledOn('edit')
-                    ->required()
-                    ->maxLength(36),
+                    ->hiddenOn('edit'),
                 Forms\Components\TextInput::make('email')
-                    ->disabledOn('edit')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
+                    ->hiddenOn('edit')
+                    ->email(),
                 Forms\Components\TextInput::make('subtotal')
-                    ->disabledOn('edit')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\DateTimePicker::make('placed_at')
-                    ->required(),
+                    ->hiddenOn('edit'),
+                Forms\Components\DateTimePicker::make('placed_at'),
                 Forms\Components\DateTimePicker::make('packaged_at'),
                 Forms\Components\DateTimePicker::make('shipped_at'),
             ]);
@@ -69,7 +60,6 @@ class OrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('shippingType.title')
                     ->label('Delivery Service')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('uuid')
                     ->label('UUID')
@@ -78,7 +68,13 @@ class OrderResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subtotal')
                     ->money('usd', 100),
-                ViewColumn::make('status')->view('tables.columns.order-status'),
+                Tables\Columns\TextColumn::make('current_status')
+                                                    ->badge()
+                                                    ->color(fn(string $state) => match($state) {
+                                                        'Order Placed' => 'warning',
+                                                        'Order Packaged' => 'info',
+                                                        'Order Shipped' => 'success',
+                                                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
