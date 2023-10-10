@@ -41,7 +41,7 @@ class ProductResource extends Resource
                     }),
                 Forms\Components\TextInput::make('slug')
                     ->disabled()
-                    ->unique('products', 'slug')
+                    ->unique('products', 'slug', ignorable: fn($record) => $record)
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
@@ -58,7 +58,7 @@ class ProductResource extends Resource
                                             ->relationship('categories', 'title')
                                             ->multiple()
                                             ->searchable(),
-            ]);
+                ]);
     }
 
     public static function table(Table $table): Table
