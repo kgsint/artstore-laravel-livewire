@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\ProductResource\Pages;
 
-use App\Filament\Resources\ProductResource;
 use Filament\Actions;
+use Illuminate\Support\Str;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\ProductResource;
 
 class CreateProduct extends CreateRecord
 {
@@ -17,6 +18,8 @@ class CreateProduct extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $data['slug'] = Str::slug($data['title']);
+
         $data['price'] *= 100;
 
         return $data;
