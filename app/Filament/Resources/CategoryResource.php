@@ -31,10 +31,13 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255)
-                    ->live(debounce: 300)
-                    ->afterStateUpdated(fn(Set $set, $state) => $set('slug', Str::slug($state))),
+                    ->live(debounce:500)
+                    ->afterStateUpdated(function(string $operation, $state, Forms\Set $set) {
+                        $set('slug', Str::slug($state));
+                    }),
                 Forms\Components\TextInput::make('slug')
                     ->required()
+                    ->unique('categories', 'slug', ignorable: fn($record) => $record)
                     ->maxLength(255),
                 Forms\Components\Select::make('parent_id')
                                                         ->label('Parent category (optional)')
