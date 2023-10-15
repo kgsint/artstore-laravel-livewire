@@ -75,16 +75,19 @@ class ProductVariationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('product.title')
-                    ->numeric()
+                    ->description(function(ProductVariation $variation) {
+                        return "{$variation->type} - {$variation->title}";
+                    })
                     ->sortable(),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->money('usd', 100)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('parent.title')
+                Tables\Columns\TextColumn::make('parent.type')
+                    ->label('Belongs To')
+                    ->description(function(ProductVariation $variation) {
+                        return $variation->parent ? "child of {$variation->parent->product->title} - {$variation->parent->title}" : "";
+                    })
+                    ->placeholder('N/A')
                     ->numeric()
                     ->sortable(),
                 // Tables\Columns\TextColumn::make('order')
@@ -116,7 +119,8 @@ class ProductVariationResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])
+            ->defaultSort('product.title');
     }
 
     public static function getRelations(): array
