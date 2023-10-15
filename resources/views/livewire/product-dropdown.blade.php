@@ -8,7 +8,11 @@
         <option value="">Choose {{ $variations->first()->type }}</option>
         @foreach ($variations as $variation)
             <option value="{{ $variation->id }}" {{ $variation->isOutOfStock() ? 'disabled' : '' }}>
-                {{ $variation->title }} ({{ $variation->stockCount() }}) {{ $variation->isLowStock() ? '(low stock)' : '' }} {{ $variation->isOutOfStock() ? 'out of stock' : '' }}
+                {{ $variation->title }}
+                <span class="text-xs text-gray-200">
+                    ({{ $variation->stockCount() }} {{ Str::plural('item', $variation->stockCount()) }}
+                </span>)
+                {{ $variation->isLowStock() ? '(low stock)' : '' }} {{ $variation->isOutOfStock() ? 'out of stock' : '' }}
             </option>
         @endforeach
     </x-select>
