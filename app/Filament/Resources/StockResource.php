@@ -9,13 +9,14 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-line';
+    protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
 
     protected static ?string $navigationGroup = 'Manage Stocks';
 
@@ -27,9 +28,14 @@ class StockResource extends Resource
             ->schema([
                 Forms\Components\Select::make('product_variation_id')
                     ->label('Product Variation')
-                    ->relationship('product_variation', 'title')
+                    ->relationship('product_variation', 'title' , modifyQueryUsing: function(Builder $query) {
+                        return $query->whereNotNull('sku');
+                    })
                     ->getOptionLabelFromRecordUsing(
-                        fn(Model $record) =>"{$record->title} ({$record->product->title} {$record?->parent?->title})"
+                        function(Model $record) {
+                            // if(!$record->parent) return;
+                            return "{$record->product->title} ({$record?->parent?->title} {$record->title})";
+                        }
                         )
                     // ->searchable()
                     ->required(),
@@ -80,7 +86,8 @@ class StockResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('amount', '>', 0));
     }
 
     public static function getPages(): array
@@ -88,5 +95,13 @@ class StockResource extends Resource
         return [
             'index' => Pages\ManageStocks::route('/'),
         ];
+    }
+
+    // only product variation with sku
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->whereHas('product_variation', function($variation) {
+            return $variation->whereNotNull('sku');
+        });
     }
 }
