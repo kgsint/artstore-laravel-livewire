@@ -21,7 +21,7 @@
                                 <span>{{ $cart->formattedSubtotal() }}</span>
                             </div>
 
-                            <a href="/checkout">
+                            <a href="/checkout" wire:navigate>
                                 <x-secondary-button class="mt-auto float-right">
                                     Checkout
                                 </x-secondary-button>

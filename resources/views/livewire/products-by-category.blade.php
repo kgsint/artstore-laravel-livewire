@@ -30,8 +30,17 @@
         <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
             {{-- loop related products and display --}}
             @foreach ($category->products as $product)
-                <a href="{{ route('products.show', $product->slug) }}" wire:navigate class="block w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('{{ $product->getMedia()->first()->getUrl() }}')">
+                <a
+                    href="{{ route('products.show', $product->slug) }}"
+                    wire:navigate
+                    class="block w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
+                >
+                    <div
+                        class="flex items-end justify-end h-56 w-full bg-cover"
+                        style="background-image:
+                                        url('{{ $product->getMedia()->first()?->getUrl() ??
+                                        $product->variations->first()->getMedia()->first()->getUrl() }}')"
+                    >
                     </div>
                     <div class="px-5 py-3">
                         <h3 class="text-gray-700 uppercase">{{ $product->title }}</h3>

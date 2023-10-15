@@ -21,15 +21,33 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/categories', CategoryIndexController::class);
-Route::get('/products', ProductIndexController::class)->name('products.index');
-Route::get('/products/{product:slug}', ProductShowController::class)->name('products.show');
+Route::group([], function() {
+    // products route
+    Route::get('/categories', CategoryIndexController::class);
+    Route::get('/products', ProductIndexController::class)
+                                                        ->name('products.index');
+    Route::get('/products/{product:slug}', ProductShowController::class)
+                                                                    ->name('products.show');
 
-Route::get('/cart', CartIndexController::class)->name('cart.index');
-Route::get('checkout', CheckoutIndexController::class)->name('checkout.index')->middleware(RedirectIfEmptyCart::class);
-Route::view('product', 'products.single-product');
-Route::get('/orders/{order:uuid}/confirmation', OrderConfirmController::class)->name('order.confirm');
-Route::get('/orders', OrderIndexController::class)->middleware('auth')->name('orders.index');
+    // cart route
+    Route::get('/cart', CartIndexController::class)->name('cart.index');
+
+    // checkout
+    Route::get('checkout', CheckoutIndexController::class)
+                                                    ->name('checkout.index')
+                                                    ->middleware(RedirectIfEmptyCart::class);
+    // Route::view('product', 'products.single-product');
+
+    // order routes
+    Route::get('/orders/{order:uuid}/confirmation', OrderConfirmController::class)
+                                                                                ->name('order.confirm');
+    Route::get('/orders', OrderIndexController::class)
+                                                ->middleware('auth')
+                                                ->name('orders.index');
+
+});
+
+
 
 require __DIR__.'/auth.php';
 
