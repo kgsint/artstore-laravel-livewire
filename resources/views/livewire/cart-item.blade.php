@@ -3,7 +3,7 @@
         {{-- image --}}
         <img
             class="h-20 w-20 object-cover rounded"
-            src="{{ $variation->parent->getFirstMediaUrl('default') ?: $variation->product->getFirstMediaUrl('default') }}" alt="product image"
+            src="{{ $variation?->parent?->getFirstMediaUrl('default') ?: $variation->product->getFirstMediaUrl('default') }}" alt="product image"
         >
         <div class="mx-3">
             {{-- product title --}}

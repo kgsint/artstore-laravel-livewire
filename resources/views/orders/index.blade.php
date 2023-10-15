@@ -25,7 +25,7 @@
                     @foreach ($order->variations as $variation)
                         <div class= "border-b py-3 flex items-center last:border-0 last:pb-0">
                             <div class="w-16 mr-4">
-                                <img src="{{ $variation->parent->getFirstMediaUrl('default') ?: $variation->product->getFirstMediaUrl('default') }}" class="w-full">
+                                <img src="{{ $variation?->parent?->getFirstMediaUrl('default') ?: $variation->product->getFirstMediaUrl('default') }}" class="w-full">
                             </div>
 
                             <div class="space-y-3">

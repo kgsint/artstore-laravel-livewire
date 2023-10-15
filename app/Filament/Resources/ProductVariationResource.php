@@ -82,10 +82,10 @@ class ProductVariationResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money('usd', 100)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('parent.type')
+                Tables\Columns\TextColumn::make('parent.product.title')
                     ->label('Belongs To')
                     ->description(function(ProductVariation $variation) {
-                        return $variation->parent ? "child of {$variation->parent->product->title} - {$variation->parent->title}" : "";
+                        return $variation->parent ? "{$variation->parent->title}" : "";
                     })
                     ->placeholder('N/A')
                     ->numeric()

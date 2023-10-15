@@ -65,7 +65,7 @@
 
             @endguest
 
-            @if ($this->shippingAddresses ?? false)
+            @if (count($this->shippingAddresses) ?? false)
                 <div>
                     <x-input-label for="Shipping" value="Shipping" class="mb-2" />
                     <x-select class="block w-full" name="shipping" wire:model.live="presavedShippingAddress">
@@ -141,7 +141,7 @@
                             {{-- image --}}
                             <img
                                 class="h-20 w-20 object-cover rounded"
-                                src="{{ $variation->parent->getFirstMediaUrl('default') ?: $variation->product->getFirstMediaUrl('default') }}" alt="product image"
+                                src="{{ $variation?->parent?->getFirstMediaUrl('default') ?: $variation->product->getFirstMediaUrl('default') }}" alt="product image"
                             >
                             <div class="mx-3">
                                 {{-- product title --}}

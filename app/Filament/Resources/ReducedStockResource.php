@@ -62,7 +62,8 @@ class ReducedStockResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn(Builder $query) => $query->where('amount', '<', 0));
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('amount', '<', 0))
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
