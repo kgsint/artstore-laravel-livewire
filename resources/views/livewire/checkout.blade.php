@@ -52,6 +52,7 @@
                 <h3 class="font-semibold">Account Details</h3>
             </div>
 
+            {{-- account form if unauthenticated --}}
             @guest
             {{-- {{ print_r($accountForm) }} --}}
                 <div>
@@ -65,6 +66,7 @@
 
             @endguest
 
+            {{-- pre-saved shipping address if there is any --}}
             @if (count($this->shippingAddresses) ?? false)
                 <div>
                     <x-input-label for="Shipping" value="Shipping" class="mb-2" />
@@ -192,10 +194,16 @@
             </div>
 
             <button
+                wire:loading.class = "opacity-50"
                 class="w-full justify-center inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
             >
-                Confirm Order
+                <span wire:loading.remove>
+                    Confirm Order
+                </span>
 
+                <span wire:loading>
+                    Loading
+                </span>
             </button>
 
 

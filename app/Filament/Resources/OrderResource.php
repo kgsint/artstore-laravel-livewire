@@ -60,14 +60,15 @@ class OrderResource extends Resource
                     ->numeric()
                     ->placeholder('guest')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('shippingAddress.address')
+                    ->description(fn(Order $order) => "{$order->shippingAddress->city} | postal code ({$order->shippingAddress->postcode})")
+                    ->label('Address')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('shippingType.title')
                     ->label('Delivery')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('uuid')
-                    ->label('UUID')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('subtotal')
                     ->money('usd', 100),
                 Tables\Columns\TextColumn::make('current_status')
