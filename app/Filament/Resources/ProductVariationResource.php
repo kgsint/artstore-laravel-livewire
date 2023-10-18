@@ -54,8 +54,6 @@ class ProductVariationResource extends Resource
                                     ->getOptionLabelFromRecordUsing(
                                         fn(Model $record) =>"{$record->title} ({$record->product?->title} {$record?->parent?->title})"
                                         ),
-                                Forms\Components\TextInput::make('order')
-                                    ->numeric(),
                                 Forms\Components\TextInput::make('sku')
                                     ->label('SKU')
                                     ->maxLength(255),
@@ -90,9 +88,6 @@ class ProductVariationResource extends Resource
                     ->placeholder('N/A')
                     ->numeric()
                     ->sortable(),
-                // Tables\Columns\TextColumn::make('order')
-                //     ->numeric()
-                //     ->sortable(),
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(),

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->string('email');
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('shipping_address_id')->constrained();
-            $table->foreignId('shipping_type_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('shipping_address_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('shipping_type_id')->constrained()->cascadeOnDelete();
             $table->integer('subtotal');
             $table->timestamp('placed_at');
             $table->timestamp('packaged_at')->nullable();
