@@ -25,7 +25,17 @@ class Navigation extends Component
     public function getProductsProperty()
     {
         if($this->search) {
-            return Product::where('title', 'LIKE', "%{$this->search}%")->get() ?? false;
+            /**
+             *  I am using pgsql as db in deployment and is case-sensitive by default
+             * if db is mysql, is case-insensitive and no need to check these orWhere conditions
+            */
+            $searchedItem = Product::
+                                where('title', 'LIKE', "%". ucfirst($this->search) ."%")
+                                ->orWhere('title', 'LIKE', "%" . strtolower($this->search) . "%")
+                                ->orWhere('title', 'LIKE', "%" . strtoupper($this->search) . "%")
+                                ->get();
+
+            return  $searchedItem ?? false;
         };
 
         return false;
