@@ -67,7 +67,7 @@
             @endguest
 
             {{-- pre-saved shipping address if there is any --}}
-            @if (count($this->shippingAddresses) ?? false)
+            @if (isset($this->shippingAddresses) ?? false)
                 <div>
                     <x-input-label for="Shipping" value="Shipping" class="mb-2" />
                     <x-select class="block w-full" name="shipping" wire:model.live="presavedShippingAddress">
