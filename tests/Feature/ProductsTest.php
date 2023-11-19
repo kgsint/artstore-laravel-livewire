@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Contracts\ProductInterface;
 use App\Livewire\Products\ProductFilter;
 use App\Models\Product;
 use App\Models\ProductVariation;
@@ -54,6 +55,9 @@ class ProductsTest extends TestCase
 
         // livewire assertions
         $response->assertSeeLivewire(ProductFilter::class);
+
+        Livewire::test(ProductFilter::class)
+                    ->assertViewHas('products', fn($products) => count($products) === 2);
     }
 
     // product show page test

@@ -13,7 +13,6 @@ class ProductFilter extends Component
 
     public $filters = [];
 
-
     public function render(ProductInterface $product)
     {
         return view('livewire.products.product-filter', [
