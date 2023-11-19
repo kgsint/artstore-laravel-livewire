@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\ProductInterface;
+use App\Services\ProductService;
 use Stripe\StripeClient;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -16,6 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // register product service for product interface
+        $this->app->bind(ProductInterface::class, fn() => new ProductService);
+
         // register stripe
         $this->app->singleton('stripe', function() {
             return new StripeClient(config('stripe.secret'));
