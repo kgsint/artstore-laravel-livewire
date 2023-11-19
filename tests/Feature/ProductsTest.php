@@ -57,7 +57,8 @@ class ProductsTest extends TestCase
         $response->assertSeeLivewire(ProductFilter::class);
 
         Livewire::test(ProductFilter::class)
-                    ->assertViewHas('products', fn($products) => count($products) === 2);
+                    ->assertViewHas('products', fn($products) => count($products) === 2)
+                    ->assertViewHas('uniqueVariations', fn($variations) => count($variations['color']) === 2);
     }
 
     // product show page test
