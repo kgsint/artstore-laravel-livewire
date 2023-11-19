@@ -14,7 +14,6 @@ class ProductFilter extends Component
 
     public $uniqueVariations;
 
-
     public function render()
     {
         return view('livewire.products.product-filter', [
