@@ -10,8 +10,6 @@ class ProductIndexController extends Controller
 {
     public function __invoke(Request $request, ProductInterface $product)
     {
-        return view('products.index', [
-            'uniqueVariations' => $product->getUniqueVariations()
-        ]);
+        return view('products.index');
     }
 }

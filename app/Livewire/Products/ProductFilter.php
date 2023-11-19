@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Products;
 
+use App\Contracts\ProductInterface;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,9 +13,8 @@ class ProductFilter extends Component
 
     public $filters = [];
 
-    public $uniqueVariations;
 
-    public function render()
+    public function render(ProductInterface $product)
     {
         return view('livewire.products.product-filter', [
             'products' => Product::
@@ -26,6 +26,7 @@ class ProductFilter extends Component
                                     })
                                     ->latest()
                                     ->paginate(12),
+            'uniqueVariations' => $product->getUniqueVariations(),
         ]);
     }
 

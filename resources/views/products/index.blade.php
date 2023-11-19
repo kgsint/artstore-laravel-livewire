@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <livewire:products.product-filter :uniqueVariations="$uniqueVariations" />
+    <livewire:products.product-filter />
 @endsection
